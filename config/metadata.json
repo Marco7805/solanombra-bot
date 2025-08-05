@@ -1,0 +1,41 @@
+{
+  "name": "Tether USD",
+  "symbol": "USDT",
+  "description": "Tether USD Stablecoin Clone on Solana",
+  "image": "https://gateway.pinata.cloud/ipfs/bafkreibmtmncjwxjzsjnofwscsjx74e2aliiuj5rrwjqusypooya7tcozy",
+  "external_url": "https://tether.to",
+  "attributes": [
+    {
+      "trait_type": "Type",
+      "value": "Stablecoin"
+    },
+    {
+      "trait_type": "Network",
+      "value": "Solana"
+    },
+    {
+      "trait_type": "Decimals",
+      "value": "6"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "1,000,000,000"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "type": "image/png",
+        "uri": "https://gateway.pinata.cloud/ipfs/bafkreibmtmncjwxjzsjnofwscsjx74e2aliiuj5rrwjqusypooya7tcozy"
+      }
+    ],
+    "category": "image",
+    "creators": [
+      {
+        "address": "tL1MPynRi5ohe5qyKsKCwfqVGwaJzFCtoTeYWEAhYU7",
+        "share": 100,
+        "verified": true
+      }
+    ]
+  }
+} 

@@ -1,0 +1,13 @@
+{
+  "chainId": 101,
+  "address": "3Gne3oSC5n23yhQvVbabtWbeaCH9d4mcc9KDCxY3QYxh",
+  "symbol": "USDT",
+  "name": "Tether USD",
+  "decimals": 6,
+  "logoURI": "https://gateway.pinata.cloud/ipfs/bafkreibmtmncjwxjzsjnofwscsjx74e2aliiuj5rrwjqusypooya7tcozy",
+  "tags": ["stablecoin"],
+  "extensions": {
+    "website": "https://tether.to",
+    "coingeckoId": "tether"
+  }
+} 

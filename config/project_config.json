@@ -1,0 +1,44 @@
+{
+  "project_info": {
+    "name": "SolanOmbra",
+    "version": "1.0.0",
+    "description": "USDT Clone Token on Solana",
+    "author": "SolanOmbra Team"
+  },
+  "token_config": {
+    "name": "Tether USD",
+    "symbol": "USDT",
+    "decimals": 6,
+    "total_supply": "1000000000000",
+    "metadata_uri": "https://gateway.pinata.cloud/ipfs/bafkreib46yosnb2gvxb4pvz3k5mrhhcxwbg2j2swibaqt2od3zoo3pmdlu",
+    "logo_uri": "https://gateway.pinata.cloud/ipfs/bafkreibmtmncjwxjzsjnofwscsjx74e2aliiuj5rrwjqusypooya7tcozy"
+  },
+  "network": {
+    "rpc_url": "https://api.mainnet-beta.solana.com",
+    "network": "mainnet-beta",
+    "commitment": "confirmed"
+  },
+  "wallet": {
+    "keypair_file": "config/solanombra_wallet.json",
+    "backup_phrase": "shallow blossom organ office inhale mixed perfect toward shock stool nephew level",
+    "address": "tL1MPynRi5ohe5qyKsKCwfqVGwaJzFCtoTeYWEAhYU7"
+  },
+  "deployment": {
+    "create_token": true,
+    "add_metadata": true,
+    "create_pool": true,
+    "deploy_bot": true
+  },
+  "bot_config": {
+    "trading_interval": 300000,
+    "min_volume": 1000,
+    "max_volume": 50000,
+    "price_target": 1.00,
+    "price_variance": 0.02
+  },
+  "pool_config": {
+    "liquidity_amount": 1000,
+    "price_impact": 0.01,
+    "slippage": 0.005
+  }
+} 

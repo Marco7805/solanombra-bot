@@ -1,0 +1,11 @@
+{
+  "token_mint": "3Gne3oSC5n23yhQvVbabtWbeaCH9d4mcc9KDCxY3QYxh",
+  "token_account": "2UoUJB9HFCgJ5gBggJBmM9dxVeGsc732mWkuUsBqfi8j",
+  "decimals": 6,
+  "initial_supply": 1000000000,
+  "name": "Tether USD",
+  "symbol": "USDT",
+  "logo_uri": "https://gateway.pinata.cloud/ipfs/bafkreibmtmncjwxjzsjnofwscsjx74e2aliiuj5rrwjqusypooya7tcozy",
+  "metadata_uri": "https://gateway.pinata.cloud/ipfs/bafkreib46yosnb2gvxb4pvz3k5mrhhcxwbg2j2swibaqt2od3zoo3pmdlu",
+  "solscan_url": "https://solscan.io/token/3Gne3oSC5n23yhQvVbabtWbeaCH9d4mcc9KDCxY3QYxh"
+}

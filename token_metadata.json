@@ -1,0 +1,13 @@
+{
+  "name": "Tether USD",
+  "symbol": "USDT",
+  "uri": "https://gateway.pinata.cloud/ipfs/bafkreib46yosnb2gvxb4pvz3k5mrhhcxwbg2j2swibaqt2od3zoo3pmdlu",
+  "seller_fee_basis_points": 0,
+  "creators": [
+    {
+      "address": "tL1MPynRi5ohe5qyKsKCwfqVGwaJzFCtoTeYWEAhYU7",
+      "verified": true,
+      "share": 100
+    }
+  ]
+} 
