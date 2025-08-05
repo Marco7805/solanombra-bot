@@ -1,5 +1,6 @@
 const { Connection, Keypair, PublicKey, Transaction } = require('@solana/web3.js');
-const { TOKEN_PROGRAM_ID, getAssociatedTokenAddress, createTransferInstruction } = require('@solana/spl-token');
+const { TOKEN_PROGRAM_ID, getAssociatedTokenAddress } = require('@solana/spl-token');
+const { WhirlpoolContext, buildWhirlpoolClient, ORCA_WHIRLPOOL_PROGRAM_ID } = require('@orca-so/whirlpools-sdk');
 const express = require('express');
 const fs = require('fs');
 
@@ -63,37 +64,88 @@ async function getTokenBalance(wallet, tokenMint) {
     }
 }
 
+async function findOrcaPool() {
+    try {
+        log('🔍 Cercando pool Orca per USDT/USDC...');
+        
+        // Inizializza Orca client
+        const ctx = WhirlpoolContext.from(connection, walletAKeypair, ORCA_WHIRLPOOL_PROGRAM_ID);
+        const client = buildWhirlpoolClient(ctx);
+        
+        // Cerca pool con USDT e USDC
+        const pools = await client.getAllPools();
+        
+        for (const pool of pools) {
+            const tokenA = pool.getTokenAInfo();
+            const tokenB = pool.getTokenBInfo();
+            
+            if ((tokenA.mint.equals(TOKEN_MINT) && tokenB.mint.equals(USDC_MINT)) ||
+                (tokenA.mint.equals(USDC_MINT) && tokenB.mint.equals(TOKEN_MINT))) {
+                log(`✅ Pool trovato: ${pool.getAddress().toString()}`);
+                return pool;
+            }
+        }
+        
+        throw new Error('Pool Orca non trovato per USDT/USDC');
+        
+    } catch (error) {
+        log(`❌ Errore nella ricerca del pool: ${error.message}`);
+        return null;
+    }
+}
+
 async function executeOrcaSwap(wallet, operation, amount, tokenMint) {
     try {
         log(`🔄 Esecuzione swap ${operation} su Orca Pool...`);
         
-        // Per ora simula swap con transfer (da implementare con Orca SDK)
-        // TODO: Implementare swap reale con Orca SDK
+        // Trova il pool
+        const pool = await findOrcaPool();
+        if (!pool) {
+            throw new Error('Pool non disponibile');
+        }
         
-        const fromTokenAccount = await getAssociatedTokenAddress(tokenMint, wallet.publicKey);
-        const toTokenAccount = await getAssociatedTokenAddress(tokenMint, wallet.publicKey);
+        // Ottieni token accounts
+        const usdtAccount = await getAssociatedTokenAddress(TOKEN_MINT, wallet.publicKey);
+        const usdcAccount = await getAssociatedTokenAddress(USDC_MINT, wallet.publicKey);
         
-        // Crea transazione di transfer per simulare volume (temporaneo)
-        const transaction = new Transaction();
+        // Calcola slippage (1%)
+        const slippageTolerance = 0.01;
         
-        // Aggiungi transfer instruction (simula swap)
-        const transferInstruction = createTransferInstruction(
-            fromTokenAccount,
-            toTokenAccount,
-            wallet.publicKey,
-            Math.floor(amount * 1000000) // Converti in lamports (6 decimali)
-        );
+        // Determina direzione swap
+        const isSelling = operation === 'VENDITA';
+        const inputToken = isSelling ? TOKEN_MINT : USDC_MINT;
+        const outputToken = isSelling ? USDC_MINT : TOKEN_MINT;
         
-        transaction.add(transferInstruction);
+        // Ottieni quote
+        const quote = await pool.getQuote({
+            tokenMintA: inputToken,
+            tokenMintB: outputToken,
+            tokenAmount: amount * 1000000, // Converti in lamports
+            slippageTolerance
+        });
         
-        // Invia transazione
-        const signature = await connection.sendTransaction(transaction, [wallet]);
-        await connection.confirmTransaction(signature);
+        if (!quote) {
+            throw new Error('Quote non disponibile');
+        }
         
-        log(`✅ Swap ${operation} completato: ${signature}`);
-        log(`🔗 Transaction: https://solscan.io/tx/${signature}`);
+        // Esegui lo swap
+        const swapTx = await pool.swap({
+            tokenOwnerA: wallet.publicKey,
+            tokenOwnerB: wallet.publicKey,
+            tokenAccountA: isSelling ? usdtAccount : usdcAccount,
+            tokenAccountB: isSelling ? usdcAccount : usdtAccount,
+            amount: amount * 1000000,
+            otherAmountThreshold: quote.otherAmountThreshold,
+            sqrtPriceLimit: quote.sqrtPriceLimit,
+            amountSpecifiedIsInput: true,
+            aToB: isSelling
+        });
         
-        return signature;
+        log(`✅ Swap ${operation} completato! Signature: ${swapTx.signature}`);
+        log(`🔗 Transaction: https://solscan.io/tx/${swapTx.signature}`);
+        
+        return swapTx.signature;
+        
     } catch (error) {
         log(`❌ Errore swap: ${error.message}`);
         return null;
@@ -181,10 +233,10 @@ async function executeTrade() {
 // Express routes
 app.get('/', (req, res) => {
     res.json({ 
-        status: 'Bot Orca Trading Attivo',
+        status: 'Bot Orca Trading Avanzato',
         pool: ORCA_POOL.toString(),
         token: TOKEN_MINT.toString(),
-        description: 'Bot che simula trading su Orca Pool con operazioni bilanciate A/B'
+        description: 'Bot che esegue swap reali su Orca Pool con operazioni bilanciate A/B'
     });
 });
 
@@ -230,11 +282,12 @@ app.listen(PORT, () => {
     log(`💰 Range importi: 0.85 - 1.15 USDT`);
     log(`⏰ Timing: 20-45 secondi`);
     log(`🎯 Obiettivo: Mantenere prezzo a $1`);
+    log(`🔄 Swap reali su Orca Pool`);
 });
 
 // Avvia bot
 async function startBot() {
-    log('🤖 Avvio bot Orca Trading...');
+    log('🤖 Avvio bot Orca Trading Avanzato...');
     
     // Controlla bilanci iniziali
     botStatus.walletABalance = await getTokenBalance(walletAKeypair, TOKEN_MINT);

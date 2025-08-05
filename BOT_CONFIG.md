@@ -10,10 +10,11 @@
 5. **LOOP** → Ricomincia
 
 ### **💰 Parametri Trading:**
-- **Range importi:** 0.1 - 2.0 USDT
+- **Range importi:** 0.85 - 1.15 USDT (micro operazioni)
 - **Timing casuale:** 20-45 secondi
 - **Range prezzo:** $0.85 - $1.15
 - **Pool Orca:** `Aa36auc7xCcDDyCR52K89casQw9hTGuJVDmPusUYbcZS`
+- **Swap reali:** Interazione diretta con pool Orca
 
 ### **👛 Wallet Configurati:**
 - **Wallet A:** `DEbXaxySrj6u3sqikVoLuNo7NVarXau6b5sp1fqURuq`
