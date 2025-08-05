@@ -42,10 +42,12 @@ npm start
 
 ## 🌐 Deploy
 
-### Railway (Raccomandato)
-1. Push su GitHub
-2. Login Railway
+### Render (Raccomandato - Gratuito)
+1. Push su GitHub ✅
+2. Login Render
 3. Deploy automatico
+
+Vedi `RENDER_DEPLOYMENT.md` per istruzioni dettagliate.
 
 ### Google Cloud
 ```bash

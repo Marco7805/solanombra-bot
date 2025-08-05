@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: solanombra-bot
+    env: node
+    buildCommand: npm install
+    startCommand: node trading_bot_railway.js
+    plan: free
+    healthCheckPath: /health
+    autoDeploy: true 
