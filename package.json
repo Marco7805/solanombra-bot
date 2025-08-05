@@ -2,9 +2,9 @@
   "name": "solanombra-trading-bot",
   "version": "1.0.0",
   "description": "USDT Clone Trading Bot on Solana",
-  "main": "trading_bot_railway.js",
+  "main": "trading_bot_orca_real.js",
   "scripts": {
-    "start": "node trading_bot_railway.js",
+    "start": "node trading_bot_orca_real.js",
     "dev": "node trading_bot_orca_simple.js",
     "deploy": "gcloud app deploy",
     "logs": "gcloud app logs tail -s default"
